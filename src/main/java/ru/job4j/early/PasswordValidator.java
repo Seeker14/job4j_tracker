@@ -14,17 +14,28 @@ public class PasswordValidator {
         if (password.equals(password.toUpperCase())) {
             throw new IllegalArgumentException("Password should contain at least one lowercase letter");
         }
-        if (password.matches("^[^0-9]*$")) {
-            throw new IllegalArgumentException("Password should contain at least one figure");
-        }
-        if (password.matches("^[A-Za-z0-9]*$")) {
-            throw new IllegalArgumentException("Password should contain at least one special symbol");
-        }
         String[] forbidden = {"qwerty", "12345", "password", "admin", "user"};
         for (String banned : forbidden) {
             if (password.toLowerCase().contains(banned)) {
                 throw new IllegalArgumentException("Password shouldn't contain substrings: qwerty, 12345, password, admin, user");
             }
+        }
+        boolean number = false;
+        boolean special = false;
+        char[] array = password.toCharArray();
+        for (char p : array) {
+            if (Character.isDigit(p)) {
+                number = true;
+            }
+            if (!Character.isLetter(p) && !Character.isDigit(p)) {
+                special = true;
+            }
+        }
+        if (!number) {
+            throw new IllegalArgumentException("Password should contain at least one figure");
+        }
+        if (!special) {
+            throw new IllegalArgumentException("Password should contain at least one special symbol");
         }
         return password;
     }
