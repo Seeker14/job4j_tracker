@@ -30,6 +30,9 @@ public class PasswordValidator {
             if (!Character.isLetter(p) && !Character.isDigit(p)) {
                 special = true;
             }
+            if (number && special) {
+                break;
+            }
         }
         if (!number) {
             throw new IllegalArgumentException("Password should contain at least one figure");
